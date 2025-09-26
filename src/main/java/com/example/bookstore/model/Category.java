@@ -1,5 +1,6 @@
 package com.example.bookstore.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,5 +24,6 @@ public class Category {
 
     // Quan hệ ngược lại: Một Category có nhiều Book
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Book> books;
 }
