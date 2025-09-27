@@ -1,11 +1,15 @@
 package com.example.bookstore.service;
 
-import com.example.bookstore.dto.RegisterRequest;
-import com.example.bookstore.model.User;
-import com.example.bookstore.repository.UserRepository;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.example.bookstore.dto.RegisterRequest;
+import com.example.bookstore.model.Role;
+import com.example.bookstore.model.User;
+import com.example.bookstore.repository.UserRepository;
 
 @Service
 public class UserService {
@@ -15,6 +19,11 @@ public class UserService {
     
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    public User findById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
     
     public User registerUser(RegisterRequest userRequest) {
         User user = new User();
@@ -40,6 +49,21 @@ public class UserService {
         }
         
         return user;
+    }
+
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    public User changeUserRole(Long userId, String newRole) {
+        User user = findById(userId);
+        try {
+            Role role = Role.valueOf(newRole.toUpperCase());
+            user.setRole(role);
+            return userRepository.save(user);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Invalid role: " + newRole);
+        }
     }
 
     public User findByUsername(String username) {

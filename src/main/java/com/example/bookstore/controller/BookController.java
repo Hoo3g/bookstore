@@ -1,12 +1,24 @@
 package com.example.bookstore.controller;
 
-import com.example.bookstore.model.Book;
-import com.example.bookstore.service.BookService;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.example.bookstore.model.Book;
+import com.example.bookstore.service.BookService;
 
 @RestController
 @RequestMapping("/api/books")
@@ -32,8 +44,24 @@ public class BookController {
     }
     
     @GetMapping("/search")
-    public ResponseEntity<List<Book>> searchBooks(@RequestParam String keyword) {
-        return ResponseEntity.ok(bookService.searchBooks(keyword));
+    public ResponseEntity<Map<String, Object>> searchBooks(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String author,
+            @RequestParam(required = false) String isbn,
+            @RequestParam(required = false) String genre
+    ) {
+        try {
+            List<Book> results = bookService.searchBooks(title, author, isbn, genre);
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("data", results);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            response.put("message", "Error searching books: " + e.getMessage());
+            return ResponseEntity.badRequest().body(response);
+        }
     }
     
     @PostMapping

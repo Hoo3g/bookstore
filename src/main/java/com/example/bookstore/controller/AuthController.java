@@ -46,10 +46,6 @@ public class AuthController {
             if (user == null) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
             }
-
-            System.out.println("Input password: " + loginRequest.getPassword());
-            System.out.println("Stored hash: " + user.getPasswordHash());
-
             boolean passwordMatches = passwordEncoder.matches(loginRequest.getPassword(), user.getPasswordHash());
             System.out.println("Password matches: " + passwordMatches);
 
