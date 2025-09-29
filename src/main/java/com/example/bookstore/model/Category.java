@@ -22,7 +22,6 @@ public class Category {
 
     private String description;
 
-    // Quan hệ ngược lại: Một Category có nhiều Book
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Book> books;

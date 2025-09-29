@@ -1,11 +1,11 @@
--- src/main/resources/db/migration/V4__Add_notifications.sql
+
 -- Thêm bảng notifications
 CREATE TABLE notifications (
     id BIGSERIAL PRIMARY KEY,
     user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     title VARCHAR(255) NOT NULL,
     message TEXT NOT NULL,
-    type VARCHAR(50) DEFAULT 'INFO', -- INFO, WARNING, ERROR, SUCCESS
+    type VARCHAR(50) DEFAULT 'INFO',
     is_read BOOLEAN DEFAULT FALSE,
     related_borrowing_id BIGINT REFERENCES borrowings(id) ON DELETE SET NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

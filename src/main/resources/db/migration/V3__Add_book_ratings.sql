@@ -1,4 +1,4 @@
--- src/main/resources/db/migration/V3__Add_book_ratings.sql
+
 -- Thêm bảng đánh giá sách
 CREATE TABLE book_ratings (
     id BIGSERIAL PRIMARY KEY,

@@ -66,10 +66,10 @@ public class BorrowingService {
         borrowing.setStatus(BorrowingStatus.RETURNED);
         bookService.returnBook(borrowing.getBook().getId());
 
-        // Calculate fine if overdue
+
         if (borrowing.getDueDate().isBefore(LocalDate.now())) {
             long daysOverdue = borrowing.getDueDate().until(LocalDate.now()).getDays();
-            BigDecimal finePerDay = new BigDecimal("1.00"); // $1 per day
+            BigDecimal finePerDay = new BigDecimal("1.00");
             borrowing.setFineAmount(finePerDay.multiply(new BigDecimal(daysOverdue)));
         }
 
@@ -85,12 +85,12 @@ public class BorrowingService {
         List<Object[]> results = borrowingRepository.findAllBorrowingInfoRaw();
 
         return results.stream().map(r -> new BorrowingInfoDTO(
-                (Long) r[0],                   // userId
-                (String) r[1],                 // userName
-                (String) r[2],                 // bookTitle
-                (LocalDate) r[3],              // borrowDate
-                r[4] != null ? (LocalDate) r[4] : null, // returnDate
-                r[5].toString()                // status (enum -> string)
+                (Long) r[0],
+                (String) r[1],
+                (String) r[2],
+                (LocalDate) r[3],
+                r[4] != null ? (LocalDate) r[4] : null,
+                r[5].toString()
         )).collect(Collectors.toList());
     }
 
@@ -102,8 +102,7 @@ public class BorrowingService {
         for (Borrowing borrowing : activeBorrowings) {
             if (borrowing.getDueDate().isBefore(today)) {
                 borrowing.setStatus(BorrowingStatus.OVERDUE);
-                
-                // Calculate and update fine amount
+
                 long daysOverdue = borrowing.getDueDate().until(today).getDays();
                 BigDecimal finePerDay = new BigDecimal("1.00"); // $1 per day
                 borrowing.setFineAmount(finePerDay.multiply(new BigDecimal(daysOverdue)));

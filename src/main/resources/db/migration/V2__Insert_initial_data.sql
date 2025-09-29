@@ -1,4 +1,4 @@
--- src/main/resources/db/migration/V2__Insert_initial_data.sql
+
 -- Thêm dữ liệu mẫu cho categories
 INSERT INTO categories (name, description) VALUES
 ('Khoa học', 'Sách về khoa học và công nghệ'),
@@ -19,8 +19,3 @@ INSERT INTO books (title, author, isbn, category_id, total_copies, available_cop
 ('Triết học phương Đông', 'Lê Thị B', '978-0777888999', 5, 2, 2, 'Tìm hiểu triết học các nước phương Đông', 2021),
 ('Spring Boot in Action', 'Craig Walls', '978-1617292545', 1, 4, 4, 'Hướng dẫn xây dựng ứng dụng với Spring Boot', 2024),
 ('React.js Handbook', 'Flavio Copes', '978-1234567890', 1, 3, 3, 'Cẩm nang React.js cho developer', 2024);
-
--- Thêm admin user mặc định
-INSERT INTO users (username, email, password_hash, full_name, role) VALUES
-('admin', 'admin@library.com', '$2a$10$YourHashedPasswordHere', 'Library Administrator', 'ADMIN'),
-('user1', 'user1@library.com', '$2a$10$YourHashedPasswordHere', 'Nguyễn Văn User', 'USER');

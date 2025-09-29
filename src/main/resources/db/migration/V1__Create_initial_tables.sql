@@ -1,4 +1,4 @@
--- src/main/resources/db/migration/V1__Create_initial_tables.sql
+
 SET search_path TO file;
 
 -- Tạo bảng users

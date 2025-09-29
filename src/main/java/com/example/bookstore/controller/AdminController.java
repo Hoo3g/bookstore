@@ -93,7 +93,7 @@ public class AdminController {
     public ResponseEntity<?> getAllUsers() {
         try {
             List<User> users = userService.findAll();
-            return ResponseEntity.ok(users); // Return the list directly
+            return ResponseEntity.ok(users);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

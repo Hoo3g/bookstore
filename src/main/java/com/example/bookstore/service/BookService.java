@@ -25,12 +25,10 @@ public class BookService {
     }
     
     public List<Book> searchBooks(String title, String author, String isbn, String genre) {
-        // Mặc định trả về tất cả sách nếu không có tiêu chí tìm kiếm
         if (title == null && author == null && isbn == null && genre == null) {
             return bookRepository.findAll();
         }
-        
-        // Xây dựng các điều kiện tìm kiếm
+
         return bookRepository.findAll().stream()
             .filter(book -> 
                 (title == null || book.getTitle().toLowerCase().contains(title.toLowerCase())) &&
